@@ -1,58 +1,58 @@
-# TUI Portfolio — Bouwplan
+# TUI Portfolio — Build Plan
 
 ## Concept
 
-Een interactief terminal portfolio bereikbaar via `ssh edwinboon.dev`.
-Gebouwd met Go, Bubble Tea en Wish.
+An interactive terminal portfolio accessible via `ssh edwinboon.dev`.
+Built with Go, Bubble Tea and Wish.
 
 ---
 
 ## Stack
 
-- **Go** — taal
-- **Bubble Tea** — TUI framework (Elm-architectuur: Model / Update / View)
-- **Lip Gloss** — styling (kleuren, borders, layout)
-- **Bubbles** — kant-en-klare componenten (lijst, spinner, etc.)
-- **Wish** — SSH server zodat mensen kunnen verbinden zonder iets te installeren
+- **Go** — language
+- **Bubble Tea** — TUI framework (Elm architecture: Model / Update / View)
+- **Lip Gloss** — styling (colors, borders, layout)
+- **Bubbles** — ready-made components (list, spinner, etc.)
+- **Wish** — SSH server so visitors can connect without installing anything
 
 ---
 
-## Elm-architectuur (belangrijk om te begrijpen)
+## Elm Architecture
 
 ```
-Model   → de state van je app (welke pagina, cursor positie, data)
-Init    → beginstaat + eventuele startup commands
-Update  → reageert op events (toetsaanslagen) en past Model aan
-View    → rendert de UI op basis van het huidige Model
+Model   → app state (current page, cursor position, data)
+Init    → initial state + optional startup commands
+Update  → reacts to events (keypresses) and updates the Model
+View    → renders the UI based on the current Model
 ```
 
 ---
 
-## Mapstructuur
+## Project Structure
 
 ```
 tui-portfolio/
-├── main.go              # entrypoint, start SSH server (Wish)
+├── main.go              # entrypoint, starts the app
 ├── go.mod
 ├── go.sum
 └── ui/
-    ├── model.go         # Model struct en Init()
-    ├── update.go        # Update() functie en key handling
-    ├── view.go          # View() functie en layout
-    ├── styles.go        # Lip Gloss stijlen
+    ├── model.go         # Model struct and Init()
+    ├── update.go        # Update() function and key handling
+    ├── view.go          # View() function and page routing
     └── pages/
-        ├── home.go      # welkomstscherm + menu
-        ├── about.go     # over mij
-        ├── projects.go  # projecten lijst
+        ├── styles.go    # Lip Gloss styles and colors
+        ├── home.go      # welcome screen + menu
+        ├── about.go     # about me
+        ├── projects.go  # projects list
         ├── blog.go      # blog posts
         └── contact.go   # links / contact
 ```
 
 ---
 
-## Stap-voor-stap bouwen
+## Steps
 
-### Stap 1 — Go project initialiseren
+### Step 1 — Initialize Go project ✅
 
 ```bash
 go mod init github.com/edwinboon/tui-portfolio
@@ -62,49 +62,45 @@ go get github.com/charmbracelet/bubbles
 go get github.com/charmbracelet/wish
 ```
 
-### Stap 2 — Basis TUI zonder SSH
+### Step 2 — Basic TUI without SSH ✅
 
-Maak een werkende Bubble Tea app lokaal:
+- `main.go` starts the app directly (no Wish, just `tea.NewProgram`)
+- `model.go` — Model with a `currentPage` field and menu items
+- `update.go` — navigate with `j/k`, enter to open a page, `q` to quit/go back
+- `view.go` — renders pages via a switch on `currentPage`
 
-- `main.go` start de app direct (zonder Wish, gewoon `tea.NewProgram`)
-- `model.go` — Model met een `currentPage` veld en een menu met opties
-- `update.go` — navigeer met `j/k` of pijltjes, enter om pagina te openen, `q` om te quiten
-- `view.go` — render het menu
+### Step 3 — Add pages ✅ (partial)
 
-### Stap 3 — Pagina's toevoegen
+- Home (menu) ✅
+- About (static text) ✅
+- Contact ✅
+- Projects (list with Bubbles `list` component) — todo
+- Blog — todo
 
-Voeg één voor één pagina's toe:
+### Step 4 — Styling with Lip Gloss ✅
 
-- Home (menu)
-- About (statische tekst)
-- Projects (lijst met Bubbles `list` component)
-- Blog
-- Contact
+- Color scheme based on edwinboon.dev
+- Rounded borders, padding
+- Active menu item highlight
+- Consistent page style via `StyleBorder` and `StylePage`
 
-### Stap 4 — Styling met Lip Gloss
+### Step 5 — SSH server with Wish
 
-- Kleurenschema kiezen
-- Borders, padding, margins
-- Highlight actief menu-item
-- Header en footer
+Wrap the Bubble Tea app in a Wish SSH server:
 
-### Stap 5 — SSH server met Wish
+- Visitors connect via `ssh edwinboon.dev`
+- Each connection gets its own session
+- Configure port number (default 2222 or 22)
 
-Wrap de Bubble Tea app in een Wish SSH server:
+### Step 6 — Deploy
 
-- Mensen verbinden via `ssh edwinboon.dev`
-- Elke connectie krijgt een eigen sessie
-- Configureer poortnummer (standaard 2222 of 22)
-
-### Stap 6 — Deployen
-
-- VPS (Hetzner/DigitalOcean) of Railway
-- Systemd service of Docker container
-- Poort 22 of 2222 openzetten
+- VPS (Hetzner/DigitalOcean) or Railway
+- Systemd service or Docker container
+- Open port 22 or 2222
 
 ---
 
-## Leerzame bronnen
+## Resources
 
 - https://github.com/charmbracelet/bubbletea/tree/main/examples
 - https://github.com/charmbracelet/wish/tree/main/examples
@@ -113,7 +109,7 @@ Wrap de Bubble Tea app in een Wish SSH server:
 
 ---
 
-## Inspiratie
+## Inspiration
 
-- https://www.terminal.shop — clean SSH portfolio voorbeeld
-- `ssh git.charm.sh` — probeer dit zelf eens in je terminal
+- https://www.terminal.shop — clean SSH portfolio example
+- `ssh git.charm.sh` — try this yourself in your terminal
