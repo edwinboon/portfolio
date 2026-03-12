@@ -4,8 +4,8 @@ import lip "charm.land/lipgloss/v2"
 
 var (
 	colorText    = lip.Color("#e2e8f0")
-	colorMuted   = lip.Color("#64748b")
-	colorAccent  = lip.Color("#0d9488")
+	colorMuted   = lip.Color("#94a3b8")
+	colorAccent  = lip.Color("#2dd4bf")
 	colorAccent2 = lip.Color("#14b8a6")
 	colorBorder  = lip.Color("#0f766e")
 
