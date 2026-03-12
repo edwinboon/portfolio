@@ -7,6 +7,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "q":
+			if m.currentPage != PageHome {
+				m.currentPage = PageHome
+				return m, nil
+			}
+
 			return m, tea.Quit
 		case "k", "up":
 			if m.cursor > 0 {
