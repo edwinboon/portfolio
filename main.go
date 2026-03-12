@@ -1,18 +1,64 @@
 package main
 
 import (
-	"fmt"
+	"context"
+	"errors"
+	"net"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	tea "charm.land/bubbletea/v2"
+	"charm.land/log/v2"
+	"charm.land/wish/v2"
+	"charm.land/wish/v2/activeterm"
+	"charm.land/wish/v2/bubbletea"
+	"charm.land/wish/v2/logging"
+	"github.com/charmbracelet/ssh"
+
 	"github.com/edwinboon/tui-portfolio/ui"
 )
 
-func main() {
-	p := tea.NewProgram(ui.InitialModel())
+const (
+	host = "localhost"
+	port = "2222"
+)
 
-	if _, err := p.Run(); err != nil {
-		fmt.Fprintf(os.Stderr, "Alas, there's been an error: %v\n", err)
+func main() {
+	s, err := wish.NewServer(
+		wish.WithAddress(net.JoinHostPort(host, port)),
+		wish.WithHostKeyPath(".ssh/id_ed25519"),
+		wish.WithMiddleware(
+			bubbletea.Middleware(teaHandler),
+			activeterm.Middleware(),
+			logging.Middleware(),
+		),
+	)
+	if err != nil {
+		log.Error("Could not start server", "error", err)
 		os.Exit(1)
 	}
+
+	done := make(chan os.Signal, 1)
+	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+	log.Info("Starting SSH server", "host", host, "port", port)
+	go func() {
+		if err = s.ListenAndServe(); err != nil && !errors.Is(err, ssh.ErrServerClosed) {
+			log.Error("Could not start server", "error", err)
+			done <- nil
+		}
+	}()
+
+	<-done
+	log.Info("Stopping SSH server")
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+	if err := s.Shutdown(ctx); err != nil && !errors.Is(err, ssh.ErrServerClosed) {
+		log.Error("Could not stop server", "error", err)
+	}
+}
+
+func teaHandler(s ssh.Session) (tea.Model, []tea.ProgramOption) {
+	return ui.InitialModel(), []tea.ProgramOption{}
 }
