@@ -1,20 +1,20 @@
 package pages
 
-import (
-	"fmt"
-)
-
 func HomeView(cursor int, menuItems []string) string {
-	s := "use the j and k keys to navigate, and enter to select a page\n\n"
+	name := StyleTitle.Render("Edwin Boon")
+	subtitle := StyleSubtitle.Render("Software Engineer · edwinboon.dev")
 
+	menu := ""
 	for i, item := range menuItems {
-		c := " " // no cursor
 		if cursor == i {
-			c = ">" // cursor!
+			menu += StyleMenuCursor.Render("  ❯ "+item) + "\n"
+		} else {
+			menu += StyleMenuItem.Render(item) + "\n"
 		}
-
-		s += fmt.Sprintf("%s %s\n", c, item)
 	}
 
-	return s
+	hint := StyleMuted.Render("  j/k  navigate   enter  select   q  quit")
+
+	content := name + "\n" + subtitle + "\n\n" + menu + "\n" + hint
+	return StyleBorder.Render(content)
 }
