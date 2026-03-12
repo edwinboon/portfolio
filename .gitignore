@@ -1,0 +1,9 @@
+# Build output
+tui-portfolio
+*.exe
+
+# Go
+vendor/
+
+# OS
+.DS_Store
