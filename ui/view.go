@@ -6,8 +6,11 @@ import (
 )
 
 func (m Model) View() tea.View {
-	if m.currentPage != PageHome {
-		return tea.NewView("Page: " + string(m.currentPage))
+	switch m.currentPage {
+	case PageAbout:
+		return tea.NewView(pages.AboutView())
+	case PageContact:
+		return tea.NewView(pages.ContactView())
 	}
 
 	labels := make([]string, len(m.menuItems))
