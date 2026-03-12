@@ -1,10 +1,14 @@
 package pages
 
 func ContactView() string {
-	return `Contact me at:
+	title := StyleTitle.Render("Contact")
 
-- Email: hello@edwinboon.dev
-- Github: https://www.github.com/edwinboon
+	links := StyleMuted.Render("  Email    ") + StyleLink.Render("hello@edwinboon.dev") + "\n" +
+		StyleMuted.Render("  GitHub   ") + StyleLink.Render("github.com/edwinboon") + "\n" +
+		StyleMuted.Render("  Website  ") + StyleLink.Render("edwinboon.dev")
 
-`
+	hint := StyleMuted.Render("  q  back to menu")
+
+	content := title + "\n\n" + links + "\n\n" + hint
+	return StylePage.Render(content)
 }
