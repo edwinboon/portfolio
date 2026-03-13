@@ -3,9 +3,12 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net"
 	"os"
 	"os/signal"
+	"strconv"
+	"strings"
 	"syscall"
 	"time"
 
@@ -20,12 +23,21 @@ import (
 	"github.com/edwinboon/tui-portfolio/ui"
 )
 
-const host = "0.0.0.0"
+func envOrDefault(key, fallback string) string {
+	if v := strings.TrimSpace(os.Getenv(key)); v != "" {
+		return v
+	}
+	return fallback
+}
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "22"
+	host := envOrDefault("HOST", "localhost")
+	port := envOrDefault("PORT", "2222")
+
+	portNum, err := strconv.Atoi(port)
+	if err != nil || portNum < 1 || portNum > 65535 {
+		fmt.Fprintf(os.Stderr, "invalid PORT value: %q\n", port)
+		os.Exit(1)
 	}
 
 	s, err := wish.NewServer(
@@ -44,7 +56,7 @@ func main() {
 
 	done := make(chan os.Signal, 1)
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-	log.Info("Starting SSH server", "host", host, "port", port)
+	log.Info("Starting SSH server", "host", host, "port", portNum)
 	go func() {
 		if err = s.ListenAndServe(); err != nil && !errors.Is(err, ssh.ErrServerClosed) {
 			log.Error("Could not start server", "error", err)
