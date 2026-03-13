@@ -1,4 +1,4 @@
-# tui-portfolio
+# edwinboon.dev
 
 An interactive terminal portfolio built with Go and Bubble Tea. Connect via SSH — no installation required.
 
