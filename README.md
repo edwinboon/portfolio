@@ -18,7 +18,7 @@ ssh edwinboon.dev
 go run .
 ```
 
-Connects on `localhost:2222` by default. Override with env vars:
+Listens on `localhost:2222` by default. Override with env vars:
 
 ```bash
 HOST=0.0.0.0 PORT=2222 go run .
