@@ -2,15 +2,15 @@ name: Deploy to VPS
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 concurrency:
   group: deploy
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   deploy:
@@ -50,3 +50,9 @@ jobs:
             mv /root/tui-portfolio-linux.new/tui-portfolio-linux /root/tui-portfolio-linux
             rmdir /root/tui-portfolio-linux.new
             systemctl restart tui-portfolio
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2
+        with:
+          files: tui-portfolio-linux
+          generate_release_notes: true
