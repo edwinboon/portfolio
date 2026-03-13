@@ -22,6 +22,7 @@ jobs:
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version-file: go.mod
+          check-latest: true
 
       - name: Build
         run: GOOS=linux GOARCH=arm64 go build -o tui-portfolio-linux .
