@@ -2,15 +2,15 @@ name: Deploy to VPS
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 concurrency:
   group: deploy
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   deploy:
@@ -26,6 +26,12 @@ jobs:
 
       - name: Build
         run: GOOS=linux GOARCH=arm64 go build -o tui-portfolio-linux .
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2
+        with:
+          files: tui-portfolio-linux
+          generate_release_notes: true
 
       - name: Upload binary
         uses: appleboy/scp-action@917f8b81dfc1ccd331fef9e2d61bdc6c8be94634 # v0.1.7
