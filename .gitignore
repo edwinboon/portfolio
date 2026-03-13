@@ -1,5 +1,6 @@
 # Build output
 tui-portfolio
+tui-portfolio-linux
 *.exe
 
 # Go

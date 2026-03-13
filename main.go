@@ -20,12 +20,14 @@ import (
 	"github.com/edwinboon/tui-portfolio/ui"
 )
 
-const (
-	host = "localhost"
-	port = "2222"
-)
+const host = "0.0.0.0"
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "22"
+	}
+
 	s, err := wish.NewServer(
 		wish.WithAddress(net.JoinHostPort(host, port)),
 		wish.WithHostKeyPath(".ssh/id_ed25519"),
