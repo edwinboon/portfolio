@@ -15,8 +15,21 @@ ssh edwinboon.dev
 ## Run locally
 
 ```bash
-go run main.go
+go run .
 ```
+
+Listens on `localhost:2222` by default. Override with env vars:
+
+```bash
+HOST=0.0.0.0 PORT=2222 go run .
+```
+
+| Variable | Default     | Description        |
+|----------|-------------|--------------------|
+| `HOST`   | `localhost` | Bind address       |
+| `PORT`   | `2222`      | Bind port (1–65535)|
+
+> **Note:** binding to port 22 requires root or elevated privileges (e.g. `sudo` or `systemd` with `AmbientCapabilities`). Use a port above 1024 for local development.
 
 ## Navigate
 

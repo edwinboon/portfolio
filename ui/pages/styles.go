@@ -4,8 +4,8 @@ import lip "charm.land/lipgloss/v2"
 
 var (
 	colorText    = lip.Color("#e2e8f0")
-	colorMuted   = lip.Color("#94a3b8")
-	colorAccent  = lip.Color("#2dd4bf")
+	colorMuted   = lip.Color("#9ca3af")
+	colorAccent  = lip.Color("#0d9488")
 	colorAccent2 = lip.Color("#14b8a6")
 	colorBorder  = lip.Color("#0f766e")
 
@@ -32,8 +32,11 @@ var (
 			Foreground(colorMuted)
 
 	StyleLink = lip.NewStyle().
-			Foreground(colorAccent2).
+			Foreground(colorAccent).
 			Underline(true)
+
+	StyleKey = lip.NewStyle().
+			Foreground(colorAccent2)
 
 	StyleBorder = lip.NewStyle().
 			Border(lip.RoundedBorder()).
@@ -47,3 +50,7 @@ var (
 			Padding(1, 4).
 			Width(64)
 )
+
+func Hint(key, label string) string {
+	return StyleKey.Render(key) + StyleMuted.Render(" "+label)
+}
