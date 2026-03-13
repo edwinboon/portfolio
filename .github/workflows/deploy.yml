@@ -9,6 +9,9 @@ concurrency:
   group: deploy
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -31,13 +34,16 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           known_hosts: ${{ secrets.VPS_HOST_KEY }}
           source: tui-portfolio-linux
-          target: /root
+          target: /root/tui-portfolio-linux.new
 
-      - name: Restart service
+      - name: Deploy atomically
         uses: appleboy/ssh-action@029f5b4aeeeb58fdfe1410a5d17f967dacf36262 # v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           known_hosts: ${{ secrets.VPS_HOST_KEY }}
-          script: systemctl restart tui-portfolio
+          script: |
+            mv /root/tui-portfolio-linux.new/tui-portfolio-linux /root/tui-portfolio-linux
+            rmdir /root/tui-portfolio-linux.new
+            systemctl restart tui-portfolio
