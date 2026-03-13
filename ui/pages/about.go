@@ -9,7 +9,7 @@ func AboutView() string {
 
 	p3 := StyleBody.Render("And let's not forget his refined taste for good coffee and specialty beers—\nbecause life is too short for anything less than top-tier brews!")
 
-	hint := StyleMuted.Render("q  back to menu")
+	hint := Hint("q", "back to menu")
 
 	content := title + "\n\n" + p1 + "\n\n" + p2 + "\n\n" + p3 + "\n\n" + hint
 	return StylePage.Render(content)

@@ -13,7 +13,7 @@ func HomeView(cursor int, menuItems []string) string {
 		}
 	}
 
-	hint := StyleMuted.Render("  j/k  navigate   enter  select   q  quit")
+	hint := "  " + Hint("j/k", "navigate") + "   " + Hint("enter", "select") + "   " + Hint("q", "quit")
 
 	content := name + "\n" + subtitle + "\n\n" + menu + "\n" + hint
 	return StyleBorder.Render(content)

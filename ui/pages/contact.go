@@ -7,7 +7,7 @@ func ContactView() string {
 		StyleBody.Render("  GitHub   ") + StyleLink.Render("github.com/edwinboon") + "\n" +
 		StyleBody.Render("  Website  ") + StyleLink.Render("edwinboon.dev")
 
-	hint := StyleMuted.Render("  q  back to menu")
+	hint := "  " + Hint("q", "back to menu")
 
 	content := title + "\n\n" + links + "\n\n" + hint
 	return StylePage.Render(content)

@@ -35,6 +35,9 @@ var (
 			Foreground(colorAccent).
 			Underline(true)
 
+	StyleKey = lip.NewStyle().
+			Foreground(colorAccent2)
+
 	StyleBorder = lip.NewStyle().
 			Border(lip.RoundedBorder()).
 			BorderForeground(colorBorder).
@@ -47,3 +50,7 @@ var (
 			Padding(1, 4).
 			Width(64)
 )
+
+func Hint(key, label string) string {
+	return StyleKey.Render(key) + StyleMuted.Render(" "+label)
+}
