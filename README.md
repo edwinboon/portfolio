@@ -23,11 +23,13 @@ tui-portfolio/
 ## Stack
 
 **TUI**
+
 - [Bubble Tea v2](https://charm.land/bubbletea/v2) — TUI framework
 - [Lip Gloss v2](https://charm.land/lipgloss/v2) — terminal styling
-- [Wish](https://github.com/charmbracelet/wish) — SSH server
+- [Wish v2](https://charm.land/wish/v2) — SSH server
 
 **Web**
+
 - [Astro](https://astro.build) — static site framework
 - [Tailwind CSS v4](https://tailwindcss.com) — styling
 
@@ -45,10 +47,10 @@ Listens on `localhost:2222` by default. Override with env vars:
 HOST=0.0.0.0 PORT=2222 go run .
 ```
 
-| Variable | Default     | Description        |
-|----------|-------------|--------------------|
-| `HOST`   | `localhost` | Bind address       |
-| `PORT`   | `2222`      | Bind port (1–65535)|
+| Variable | Default     | Description         |
+| -------- | ----------- | ------------------- |
+| `HOST`   | `localhost` | Bind address        |
+| `PORT`   | `2222`      | Bind port (1–65535) |
 
 > **Note:** binding to port 22 requires root or elevated privileges (e.g. `sudo` or `systemd` with `AmbientCapabilities`). Use a port above 1024 for local development.
 
@@ -70,6 +72,7 @@ git push --tags
 ```
 
 This will:
+
 1. Build the Go binary for Linux ARM64
 2. Upload and deploy it to the VPS
 3. Restart the systemd service
@@ -77,8 +80,8 @@ This will:
 
 ## Navigate
 
-| Key     | Action          |
-|---------|-----------------|
-| `j/k`   | Move up / down  |
-| `enter` | Select page     |
-| `q`     | Back / quit     |
+| Key     | Action         |
+| ------- | -------------- |
+| `j/k`   | Move up / down |
+| `enter` | Select page    |
+| `q`     | Back / quit    |
