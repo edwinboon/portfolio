@@ -19,6 +19,8 @@ type Model struct {
 	currentPage Page
 	cursor      int
 	menuItems   []MenuItem
+	width       int
+	height      int
 }
 
 func InitialModel() Model {
