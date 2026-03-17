@@ -10,28 +10,36 @@ ssh edwinboon.dev
 
 ```
 tui-portfolio/
-├── main.go        # SSH server entrypoint
-├── ui/            # TUI (Bubble Tea)
+├── main.go              # SSH server entrypoint
+├── ui/                  # TUI (Bubble Tea)
 │   ├── model.go
 │   ├── update.go
 │   ├── view.go
 │   └── pages/
-└── web/           # Landing page (Astro)
-    └── src/
+└── web/                 # Landing page (Astro)
+    ├── src/
+    │   ├── pages/
+    │   └── styles/
+    └── public/
 ```
 
 ## Stack
 
 **TUI**
-
 - [Bubble Tea v2](https://charm.land/bubbletea/v2) — TUI framework
 - [Lip Gloss v2](https://charm.land/lipgloss/v2) — terminal styling
 - [Wish v2](https://charm.land/wish/v2) — SSH server
 
 **Web**
-
 - [Astro](https://astro.build) — static site framework
 - [Tailwind CSS v4](https://tailwindcss.com) — styling
+- TypeScript
+
+**Infrastructure**
+- Hetzner CAX11 VPS (ARM64)
+- Caddy — web server with automatic HTTPS
+- systemd — process management
+- Cloudflare — DNS
 
 ## Run locally
 
@@ -41,7 +49,13 @@ tui-portfolio/
 go run .
 ```
 
-Listens on `localhost:2222` by default. Override with env vars:
+Listens on `localhost:2222` by default:
+
+```bash
+ssh localhost -p 2222
+```
+
+Override with env vars:
 
 ```bash
 HOST=0.0.0.0 PORT=2222 go run .
@@ -52,7 +66,7 @@ HOST=0.0.0.0 PORT=2222 go run .
 | `HOST`   | `localhost` | Bind address        |
 | `PORT`   | `2222`      | Bind port (1–65535) |
 
-> **Note:** binding to port 22 requires root or elevated privileges (e.g. `sudo` or `systemd` with `AmbientCapabilities`). Use a port above 1024 for local development.
+> **Note:** binding to port 22 requires root or elevated privileges. Use a port above 1024 for local development.
 
 **Web**
 
@@ -64,19 +78,33 @@ npm run dev
 
 ## Deploy
 
-Deployments are triggered by pushing a version tag:
+Both the TUI and web are deployed automatically by pushing a version tag:
 
 ```bash
 git tag v1.0.0
 git push --tags
 ```
 
-This will:
+**TUI deploy** (`deploy.yml`):
+1. Builds the Go binary for Linux ARM64
+2. Uploads to VPS and replaces the binary atomically
+3. Restarts the systemd service
+4. Creates a GitHub Release with release notes
 
-1. Build the Go binary for Linux ARM64
-2. Upload and deploy it to the VPS
-3. Restart the systemd service
-4. Create a GitHub Release with release notes
+**Web deploy** (`deploy-web.yml`):
+1. Builds the Astro site (`npm run build`)
+2. Uploads `dist/` to `/var/www/edwinboon.dev/` on the VPS
+3. Caddy serves the updated files immediately — no restart needed
+
+## Infrastructure
+
+The VPS runs two services:
+
+| Service | Port | Description |
+|---------|------|-------------|
+| Wish (Go) | 22 | SSH portfolio |
+| Caddy | 80, 443 | Web landing page |
+| sshd | 2222 | Server management |
 
 ## Navigate
 
