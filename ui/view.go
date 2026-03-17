@@ -1,11 +1,20 @@
 package ui
 
 import (
+	"fmt"
+
 	tea "charm.land/bubbletea/v2"
 	"github.com/edwinboon/tui-portfolio/ui/pages"
 )
 
+const minWidth = 70
+const minHeight = 20
+
 func (m Model) View() tea.View {
+	if m.width > 0 && (m.width < minWidth || m.height < minHeight) {
+		return tea.NewView(fmt.Sprintf("  Terminal too small.\n  Please resize to at least %d×%d.", minWidth, minHeight))
+	}
+
 	switch m.currentPage {
 	case PageAbout:
 		return tea.NewView(pages.AboutView())
