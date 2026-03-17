@@ -1,0 +1,42 @@
+name: Deploy web to VPS
+
+on:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: "deploy-web"
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-web:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@60edb5dd545a775178f26af4cba05f3625d2d0b4 # v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Build web
+        working-directory: web
+        run: npm ci && npm run build
+
+      - name: Upload web files
+        uses: appleboy/scp-action@917f8b81dfc1ccd331fef9e2d61bdc6c8be94634 # v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          port: 2222
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          known_hosts: ${{ secrets.VPS_HOST_KEY }}
+          source: web/dist/
+          target: /var/www/edwinboon.dev/
