@@ -98,7 +98,7 @@ git push --tags
 
 ## Infrastructure
 
-The VPS runs two services:
+The VPS runs the following services:
 
 | Service | Port | Description |
 |---------|------|-------------|
