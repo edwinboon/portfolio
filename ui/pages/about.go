@@ -19,7 +19,7 @@ strategy of a great board game, he loves unwinding with immersive experiences.
 And let's not forget his refined taste for good coffee and specialty beers—
 because life is too short for anything less than top-tier brews!
 
-	`
+`
 
 	markdown := RenderMarkdown(about)
 	hint := Hint("q", "back to menu")
