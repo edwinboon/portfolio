@@ -1,7 +1,7 @@
 package pages
 
 func AboutView() string {
-	about := ` # About Edwin
+	about := `# About Edwin
 
 Edwin is a passionate software developer with over 12 years of experience,
 transforming his love for programming from a hobby into a thriving career.
@@ -18,7 +18,6 @@ strategy of a great board game, he loves unwinding with immersive experiences.
 
 And let's not forget his refined taste for good coffee and specialty beers—
 because life is too short for anything less than top-tier brews!
-
 `
 
 	markdown := RenderMarkdown(about)

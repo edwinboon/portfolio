@@ -1,6 +1,8 @@
 package pages
 
 import (
+	"fmt"
+
 	"charm.land/glamour/v2"
 	"charm.land/glamour/v2/styles"
 )
@@ -14,19 +16,22 @@ func uintPtr(i uint) *uint {
 }
 
 func RenderMarkdown(md string) string {
-	styles := styles.DarkStyleConfig
-	styles.H1.BackgroundColor = stringPtr("#0d9488")
-	styles.H1.Color = stringPtr("#ffffff")
-	styles.Document.Margin = uintPtr(0)
+	cfg := styles.DarkStyleConfig
+	cfg.H1.BackgroundColor = stringPtr("#0d9488")
+	cfg.H1.Color = stringPtr("#ffffff")
+	cfg.Document.Margin = uintPtr(0)
 
-	r, _ := glamour.NewTermRenderer(
+	r, err := glamour.NewTermRenderer(
 		glamour.WithWordWrap(0),
-		glamour.WithStyles(styles),
+		glamour.WithStyles(cfg),
 	)
+	if err != nil {
+		return fmt.Sprintf("Failed to create renderer: %v", err)
+	}
 
 	out, err := r.Render(md)
 	if err != nil {
-		return " Failed to render the markdown content."
+		return fmt.Sprintf("Failed to render the markdown content: %v", err)
 	}
 
 	return out
