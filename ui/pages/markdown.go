@@ -17,9 +17,16 @@ func uintPtr(i uint) *uint {
 
 func RenderMarkdown(md string) string {
 	cfg := styles.DarkStyleConfig
+	// General document styling
+	cfg.Document.Margin = uintPtr(0)
+
+	// Header styling
 	cfg.H1.BackgroundColor = stringPtr("#0d9488")
 	cfg.H1.Color = stringPtr("#ffffff")
-	cfg.Document.Margin = uintPtr(0)
+
+	// Link styling
+	cfg.Link.Color = stringPtr("#0d9488")
+	cfg.LinkText.Color = stringPtr("#0d9488")
 
 	r, err := glamour.NewTermRenderer(
 		glamour.WithWordWrap(0),

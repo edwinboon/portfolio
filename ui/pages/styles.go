@@ -7,7 +7,7 @@ var (
 	colorMuted   = lip.Color("#9ca3af")
 	colorAccent  = lip.Color("#0d9488")
 	colorAccent2 = lip.Color("#14b8a6")
-	colorBorder  = lip.Color("#0f766e")
+	colorBorder  = lip.Color("#0d9488")
 
 	StyleTitle = lip.NewStyle().
 			Foreground(colorAccent).
