@@ -1,14 +1,21 @@
 package pages
 
+import "strings"
+
 func ContactView() string {
-	title := StyleTitle.Render("Contact")
+	contactTitle := `# Contact Me`
+	markdown := RenderMarkdown(contactTitle)
 
-	links := StyleBody.Render("  Email    ") + StyleLink.Render("hello@edwinboon.dev") + "\n" +
-		StyleBody.Render("  GitHub   ") + StyleLink.Render("github.com/edwinboon") + "\n" +
-		StyleBody.Render("  Website  ") + StyleLink.Render("edwinboon.dev")
+	email := LinkView("Email:", "hello@edwinboon.dev", "mailto:hello@edwinboon.dev")
+	github := LinkView("Github:", "github.com/edwinboon", "https://github.com/edwinboon")
+	website := LinkView("Website:", "edwinboon.dev", "https://edwinboon.dev")
 
-	hint := "  " + Hint("q", "back to menu")
+	hint := Hint("q", "back to menu")
 
-	content := title + "\n\n" + links + "\n\n" + hint
-	return StylePage.Render(content)
+	contact := strings.Join([]string{
+		strings.TrimRight(markdown, "\n"), email, github, website, "",
+		hint,
+	}, "\n")
+
+	return StylePage.Render(contact)
 }
