@@ -42,7 +42,7 @@ var (
 			Border(lip.RoundedBorder()).
 			BorderForeground(colorBorder).
 			Padding(1, 4).
-			Width(54)
+			Width(64)
 
 	StylePage = lip.NewStyle().
 			Border(lip.RoundedBorder()).
