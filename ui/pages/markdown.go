@@ -9,14 +9,15 @@ func stringPtr(s string) *string {
 	return &s
 }
 
-func boolPtr(b bool) *bool {
-	return &b
+func uintPtr(i uint) *uint {
+	return &i
 }
 
 func RenderMarkdown(md string) string {
 	styles := styles.DarkStyleConfig
 	styles.H1.BackgroundColor = stringPtr("#0d9488")
 	styles.H1.Color = stringPtr("#ffffff")
+	styles.Document.Margin = uintPtr(0)
 
 	r, _ := glamour.NewTermRenderer(
 		glamour.WithWordWrap(0),

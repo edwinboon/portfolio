@@ -22,6 +22,6 @@ because life is too short for anything less than top-tier brews!
 	`
 
 	markdown := RenderMarkdown(about)
-	hint := "  " + Hint("q", "back to menu")
+	hint := Hint("q", "back to menu")
 	return StylePage.Render(markdown + hint)
 }
