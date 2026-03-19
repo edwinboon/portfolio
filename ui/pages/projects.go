@@ -4,7 +4,7 @@ type Project struct {
 	Name        string
 	Description string
 	URL         string
-	Languages   []string
+	Language    string
 }
 
 func ProjectsView() string {
