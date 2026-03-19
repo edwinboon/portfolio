@@ -1,7 +1,7 @@
 package pages
 
 func HomeView(cursor int, menuItems []string) string {
-	name := StyleTitle.Render(" Edwin Boon ")
+	name := StyleTitle.Render("Edwin Boon")
 	subtitle := StyleSubtitle.Render("Software Engineer · edwinboon.dev")
 
 	menu := ""
