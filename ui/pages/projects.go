@@ -7,6 +7,6 @@ type Project struct {
 	Languages   []string
 }
 
-func ProjectView(p Project) string {
+func ProjectsView() string {
 	return "Welcome to my projects page"
 }

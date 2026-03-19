@@ -10,9 +10,10 @@ type MenuItem struct {
 }
 
 const (
-	PageHome    Page = "home"
-	PageAbout   Page = "about"
-	PageContact Page = "contact"
+	PageHome     Page = "home"
+	PageAbout    Page = "about"
+	PageProjects Page = "projects"
+	PageContact  Page = "contact"
 )
 
 type Model struct {
@@ -29,6 +30,7 @@ func InitialModel() Model {
 		cursor:      0,
 		menuItems: []MenuItem{
 			{label: "About", page: PageAbout},
+			{label: "Projects", page: PageProjects},
 			{label: "Contact", page: PageContact},
 		},
 	}
