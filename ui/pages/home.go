@@ -1,9 +1,11 @@
 package pages
 
-func HomeView(cursor int, menuItems []string) string {
-	name := StyleTitle.Render("Edwin Boon")
-	subtitle := StyleSubtitle.Render("Software Engineer · edwinboon.dev")
+var (
+	title    = RenderMarkdown("# Edwin Boon")
+	subtitle = StyleSubtitle.Render("Software Engineer · edwinboon.dev")
+)
 
+func HomeView(cursor int, menuItems []string) string {
 	menu := ""
 	for i, item := range menuItems {
 		if cursor == i {
@@ -15,6 +17,6 @@ func HomeView(cursor int, menuItems []string) string {
 
 	hint := "  " + Hint("j/k", "navigate") + "   " + Hint("enter", "select") + "   " + Hint("q", "quit")
 
-	content := name + "\n" + subtitle + "\n\n" + menu + "\n" + hint
+	content := title + subtitle + "\n\n" + menu + "\n" + hint
 	return StyleBorder.Render(content)
 }
