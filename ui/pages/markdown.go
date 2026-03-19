@@ -15,6 +15,10 @@ func uintPtr(i uint) *uint {
 	return &i
 }
 
+func boolPtr(b bool) *bool {
+	return &b
+}
+
 func RenderMarkdown(md string) string {
 	cfg := styles.DarkStyleConfig
 	// General document styling
@@ -23,6 +27,9 @@ func RenderMarkdown(md string) string {
 	// Header styling
 	cfg.H1.BackgroundColor = stringPtr("#0d9488")
 	cfg.H1.Color = stringPtr("#ffffff")
+	cfg.H4.Prefix = ""
+	cfg.H4.Color = stringPtr("#0d9488")
+	cfg.H4.Bold = boolPtr(false)
 
 	// Link styling
 	cfg.Link.Color = stringPtr("#0d9488")

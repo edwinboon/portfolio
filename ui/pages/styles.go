@@ -10,9 +10,10 @@ var (
 	colorBorder  = lip.Color("#0d9488")
 
 	StyleTitle = lip.NewStyle().
-			Foreground(colorAccent).
+			Foreground(colorText).
+			Background(colorAccent).
 			Bold(true).
-			MarginBottom(0)
+			Padding(0, 1)
 
 	StyleSubtitle = lip.NewStyle().
 			Foreground(colorMuted)
