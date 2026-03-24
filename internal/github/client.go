@@ -3,6 +3,8 @@ package github
 import (
 	"encoding/json"
 	"net/http"
+
+	"github.com/edwinboon/tui-portfolio/internal/models"
 )
 
 type Repo struct {
@@ -31,4 +33,13 @@ func FetchRepos() ([]Repo, error) {
 	}
 
 	return repos, nil
+}
+
+func ToProject(r Repo) models.Project {
+	return models.Project{
+		Name:        r.Name,
+		Description: r.Description,
+		URL:         r.HTMLURL,
+		Language:    r.Language,
+	}
 }

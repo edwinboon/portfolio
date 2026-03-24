@@ -20,6 +20,8 @@ import (
 	"charm.land/wish/v2/logging"
 	"github.com/charmbracelet/ssh"
 
+	"github.com/edwinboon/tui-portfolio/internal/github"
+	"github.com/edwinboon/tui-portfolio/internal/models"
 	"github.com/edwinboon/tui-portfolio/ui"
 )
 
@@ -74,5 +76,17 @@ func main() {
 }
 
 func teaHandler(s ssh.Session) (tea.Model, []tea.ProgramOption) {
-	return ui.InitialModel(), []tea.ProgramOption{}
+	repos, err := github.FetchRepos()
+	if err != nil {
+		log.Error("Failed to fetch GitHub repos", "error", err)
+		repos = []github.Repo{}
+	}
+
+	var projs []models.Project
+
+	for _, r := range repos {
+		projs = append(projs, github.ToProject(r))
+	}
+
+	return ui.InitialModel(projs), []tea.ProgramOption{}
 }

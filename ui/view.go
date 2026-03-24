@@ -21,7 +21,7 @@ func (m Model) View() tea.View {
 	case PageAbout:
 		return tea.NewView(pages.AboutView())
 	case PageProjects:
-		return tea.NewView(pages.ProjectsView())
+		return tea.NewView(pages.ProjectsView(m.projects))
 	case PageContact:
 		return tea.NewView(pages.ContactView())
 	}

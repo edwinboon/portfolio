@@ -1,6 +1,9 @@
 package ui
 
-import tea "charm.land/bubbletea/v2"
+import (
+	tea "charm.land/bubbletea/v2"
+	"github.com/edwinboon/tui-portfolio/internal/models"
+)
 
 type Page string
 
@@ -20,14 +23,16 @@ type Model struct {
 	currentPage Page
 	cursor      int
 	menuItems   []MenuItem
+	projects    []models.Project
 	width       int
 	height      int
 }
 
-func InitialModel() Model {
+func InitialModel(p []models.Project) Model {
 	return Model{
 		currentPage: PageHome,
 		cursor:      0,
+		projects:    p,
 		menuItems: []MenuItem{
 			{label: "About", page: PageAbout},
 			{label: "Projects", page: PageProjects},
