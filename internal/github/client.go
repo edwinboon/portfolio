@@ -2,10 +2,14 @@ package github
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/edwinboon/tui-portfolio/internal/models"
 )
+
+var httpClient = &http.Client{Timeout: 10 * time.Second}
 
 type Repo struct {
 	ID          int    `json:"id"`
@@ -18,13 +22,15 @@ type Repo struct {
 const apiURL = "https://api.github.com/users/edwinboon/repos"
 
 func FetchRepos() ([]Repo, error) {
-	resp, err := http.Get(apiURL)
+	resp, err := httpClient.Get(apiURL)
 	if err != nil {
 		return nil, err
 	}
-
-	// Ensure the response body is closed after we're done with it
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("github api returned status %d", resp.StatusCode)
+	}
 
 	repos := []Repo{}
 	err = json.NewDecoder(resp.Body).Decode(&repos)
