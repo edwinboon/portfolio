@@ -11,6 +11,9 @@ ssh edwinboon.dev
 ```
 tui-portfolio/
 ├── main.go              # SSH server entrypoint
+├── internal/
+│   ├── github/          # GitHub API client
+│   └── models/          # Shared data models
 ├── ui/                  # TUI (Bubble Tea)
 │   ├── model.go
 │   ├── update.go
