@@ -24,8 +24,8 @@ const hints: { key: string; label: string }[] = [
       rel="stylesheet"
     />
   </head>
-  <body class="bg-gray-800 text-slate-200 font-mono min-h-dvh grid place-items-center p-6">
-    <div class="border border-teal-border rounded-lg p-8 w-full max-w-lg flex flex-col gap-6">
+  <body class="bg-gray-800 text-slate-200 font-mono min-h-dvh grid place-items-center p-3 sm:p-6">
+    <div class="border border-teal-border rounded-lg p-4 sm:p-8 w-full max-w-lg flex flex-col gap-6">
 
       <div class="flex flex-col gap-1">
         <span class="text-xl font-bold text-accent">Edwin Boon</span>
@@ -37,16 +37,16 @@ const hints: { key: string; label: string }[] = [
         Connect from your terminal — no installation required.
       </p>
 
-      <div class="border border-teal-border rounded-md px-4 py-3 flex items-center justify-between gap-4 bg-gray-900">
-        <div class="flex items-center text-[0.95rem]">
-          <span class="text-accent font-bold">$</span>
-          <span class="text-slate-200"> {sshCommand}</span>
-          <span class="inline-block w-2 h-[1.1em] bg-accent-dim ml-0.5 align-middle animate-blink"></span>
+      <div class="border border-teal-border rounded-md px-4 py-3 flex items-center gap-4 bg-gray-900">
+        <div class="flex items-center text-sm sm:text-[0.95rem] min-w-0 flex-1 overflow-hidden">
+          <span class="text-accent font-bold flex-shrink-0">$</span>
+          <span class="text-slate-200 truncate"> {sshCommand}</span>
+          <span class="inline-block w-2 h-[1.1em] bg-accent-dim ml-0.5 align-middle animate-blink flex-shrink-0"></span>
         </div>
         <button
           id="copy-btn"
           data-copy={sshCommand}
-          class="border border-teal-border rounded px-2 py-0.5 text-xs text-muted hover:text-accent hover:border-accent transition-colors cursor-pointer"
+          class="flex-shrink-0 w-16 text-center border border-teal-border rounded px-2 py-0.5 text-xs text-muted hover:text-accent hover:border-accent transition-colors cursor-pointer"
         >
           copy
         </button>
