@@ -30,6 +30,11 @@ jobs:
         working-directory: web
         run: npm ci && npm run build
 
+      - name: Add VPS to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 2222 ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
       - name: Upload web files
         uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345 # v1.0.0
         with:
@@ -37,6 +42,5 @@ jobs:
           port: 2222
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          fingerprint: ${{ secrets.VPS_HOST_KEY }}
           source: web/dist/
           target: /var/www/edwinboon.dev/
