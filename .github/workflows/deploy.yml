@@ -34,7 +34,6 @@ jobs:
           port: 2222
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          fingerprint: ${{ secrets.VPS_HOST_KEY }}
           source: tui-portfolio-linux
           target: /root/tui-portfolio-linux.new
 
@@ -45,7 +44,6 @@ jobs:
           port: 2222
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          fingerprint: ${{ secrets.VPS_HOST_KEY }}
           script: |
             mv /root/tui-portfolio-linux.new/tui-portfolio-linux /root/tui-portfolio-linux
             rmdir /root/tui-portfolio-linux.new
