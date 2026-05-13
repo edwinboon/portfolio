@@ -27,6 +27,11 @@ jobs:
       - name: Build
         run: GOOS=linux GOARCH=arm64 go build -o tui-portfolio-linux .
 
+      - name: Add VPS to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 2222 ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
       - name: Upload binary
         uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345 # v1.0.0
         with:
